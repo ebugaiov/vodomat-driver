@@ -1,14 +1,33 @@
 import { auth } from '@/lib/auth';
- 
-export default auth((req) => {
-    const isOnLoginPage = req.nextUrl.pathname.startsWith('/login');
-    const isLoggedIn = !!req.auth;
+import { NextResponse } from 'next/server';
 
-    if (!isLoggedIn && !isOnLoginPage) return Response.redirect(new URL('/login', req.nextUrl));
-    if (isLoggedIn && isOnLoginPage) return Response.redirect(new URL('/', req.nextUrl));
+const publicRoutes = ['/login', ];
+
+export default auth((req) => {
+    const { nextUrl } = req;
+    const isLoggedIn = !!req.auth;
+    
+    const isPublicRoute = publicRoutes.some(route => 
+        nextUrl.pathname.startsWith(route)
+    );
+    const isAuthRoute = nextUrl.pathname.startsWith('/login');
+
+    // Redirect logged-in users away from auth pages
+    if (isLoggedIn && isAuthRoute) {
+        const callbackUrl = nextUrl.searchParams.get('callbackUrl') || '/';
+        return Response.redirect(new URL(callbackUrl, nextUrl));
+    }
+
+    // Redirect non-logged-in users to login (except public routes)
+    if (!isLoggedIn && !isPublicRoute) {
+        const loginUrl = new URL('/login', nextUrl);
+        loginUrl.searchParams.set('callbackUrl', nextUrl.pathname);
+        return Response.redirect(loginUrl);
+    }
+
+    return NextResponse.next();
 })
- 
+
 export const config = {
-    // https://nextjs.org/docs/app/api-reference/file-conventions/proxy#matcher
-    matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+    matcher: ['/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
 };
