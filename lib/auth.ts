@@ -6,7 +6,7 @@ import { authConfig } from "@/lib/auth.config";
 import { getUserByName } from './data';
 
 const loginSchema = z.object({
-    name: z.string().min(4),
+    username: z.string().min(4),
     password: z.string().min(4)
 })
 
@@ -20,8 +20,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 const parsedCredentials = loginSchema.safeParse(credentials);
 
                 if (parsedCredentials.success) {
-                    const { name, password } = parsedCredentials.data;
-                    const user = await getUserByName(name);
+                    const { username, password } = parsedCredentials.data;
+                    const user = await getUserByName(username);
                     if (!user) return null;
                     const passwordMatch = await bcrypt.compare(password, user.password_hash);
 
