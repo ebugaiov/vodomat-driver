@@ -5,7 +5,7 @@ export default async function Page() {
     return (
         <main className="pt-20">
             <Navbar />
-            {/* <Statuses /> */}
+            <Statuses />
         </main>
     )
 }
