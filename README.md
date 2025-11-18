@@ -1,36 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vodomat
+
+Vodomat is a comprehensive system for managing water vending machines. This repository contains the "Driver" module, a Next.js application designed for drivers to monitor the status of water vending machines on their routes.
+
+## Features
+
+-   **Driver Authentication:** Drivers can log in using their credentials.
+-   **Machine Status Monitoring:** View a list of water vending machines with real-time status updates.
+-   **Detailed Information:** For each machine, drivers can see:
+    -   Address
+    -   Remaining water level
+    -   Total volume
+    -   Last notification time
+-   **Alerts:** The application highlights machines with low water levels or those that are inactive.
+
+## Technologies Used
+
+-   **Frontend:** [Next.js](https://nextjs.org/), [React](https://reactjs.org/), [Tailwind CSS](https://tailwindcss.com/)
+-   **Backend:** [Next.js (API Routes)](https://nextjs.org/docs/api-routes/introduction), [Node.js](https://nodejs.org/)
+-   **Authentication:** [NextAuth.js](https://next-auth.js.org/)
+-   **Database:** [MySQL](https://www.mysql.com/)
+-   **Styling:** [Heroicons](https://heroicons.com/), [Lucide React](https://lucide.dev/guide/packages/lucide-react)
+-   **Deployment:** [Docker](https://www.docker.com/)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+-   [Node.js](https://nodejs.org/) (v22 or later)
+-   [pnpm](https://pnpm.io/)
+-   [Docker](https://www.docker.com/) (for running the application in a container)
+
+### Environment Variables
+
+Create a `.env` file in the root of the project and add the following environment variables. You can use `.env.example` as a template.
+
+```
+# Database connection
+DB_HOST=
+DB_PORT=
+DB_USER=
+DB_PASSWORD=
+DB_NAME=
+
+# NextAuth.js
+AUTH_SECRET=
+AUTH_URL=
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation and Running the Application
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1.  **Install dependencies:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    ```bash
+    pnpm install
+    ```
 
-## Learn More
+2.  **Run the development server:**
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    pnpm dev
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    The application will be available at [http://localhost:3000](http://localhost:3000).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Building the Application
 
-## Deploy on Vercel
+To create a production build, run:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Running with Docker
+
+To build and run the application with Docker, use the following commands:
+
+```bash
+# Build the Docker image
+docker-compose build
+
+# Start the application
+docker-compose up
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Future Modules
+
+The Vodomat project will be expanded to include modules for administrators and clients.
