@@ -14,4 +14,5 @@ export type MachineStatus = {
     volume: number;
     last_notification: string;
     low_water: boolean;
+    is_inactive: boolean;
 }

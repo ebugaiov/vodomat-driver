@@ -34,6 +34,7 @@ export async function fetchStatusesByRoute(route: string): Promise<MachineStatus
                 avtomat.size AS volume,
                 ROUND(status.water / 100) AS remind_water,
                 status.low_water_balance AS low_water,
+                (status.time < NOW() - INTERVAL 2 HOUR) AS is_inactive,
                 route.car_number
             FROM status
             JOIN avtomat ON status.avtomat_number = avtomat.avtomat_number

@@ -6,11 +6,20 @@ import { Clock, Droplet, MapPin } from "lucide-react";
 export default function StatusCard({ status }: { status: MachineStatus }) {
     const cardClasses = `
         rounded-lg shadow-md p-4 mb-4 flex flex-col
-        ${status.low_water ? 'border-l-4 border-red-500' : 'border-l-4 border-blue-500'}
+        ${status.low_water
+            ? 'border-l-4 border-red-500'
+            : status.is_inactive
+                ? 'border-l-4 border-yellow-500'
+                : 'border-l-4 border-blue-500'
+        }
     `;
 
     const cardStyle = {
-        backgroundColor: status.low_water ? 'rgba(254, 226, 226, 0.6)' : 'rgba(224, 242, 254, 0.6)'
+        backgroundColor: status.low_water
+            ? 'rgba(254, 226, 226, 0.6)' // Light red with 60% opacity
+            : status.is_inactive
+                ? 'rgba(255, 247, 230, 0.6)' // Light yellow with 60% opacity
+                : 'rgba(224, 242, 254, 0.6)' // Light blue with 60% opacity
     };
 
     return (
@@ -34,6 +43,11 @@ export default function StatusCard({ status }: { status: MachineStatus }) {
             {status.low_water ? (
                 <div className="mt-3 text-sm font-semibold text-red-600 animate-pulse text-center">
                     Warning: Low water level!
+                </div>
+            ) : null}
+            {status.is_inactive && !status.low_water ? (
+                <div className="mt-3 text-sm font-semibold text-yellow-600 animate-pulse text-center">
+                    Warning: Machine is inactive!
                 </div>
             ) : null}
         </div>
